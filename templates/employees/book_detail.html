@@ -1,3 +1,8 @@
+{% load static %}
+
+{% include '../header.html' %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <h1>Имя - {{emp_id.name}}</h1>
 <p>Почта - {{emp_id.name}}</p>
 <img src="{{emp_id.image.url}}" width="350" height="250" alt="">
@@ -7,3 +12,18 @@
 <data>Дата рождение - {{emp_id.date_of_birth}}</data>
 <a href="{{emp_id.github}}">Перейти в GITHUB</a>
 <data>Дата создания поста - {{emp_id.created_at}}</data>
+
+<ul>
+    {% for i in emp_id.reviews_book.all %}
+        <li>
+        <h1>{{ i.stars }}</h1>
+        <p>{{ i.text }}</p>
+        <p>{{ i.created_at }}</p>
+        </li>
+        
+        
+    {% endfor %}
+</ul>
+
+
+{% include '../footer.html' %}
