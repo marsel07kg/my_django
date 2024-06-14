@@ -4,21 +4,21 @@ from django.db import models
 class Employees(models.Model):
 
 
-    PROGRAMMING_STATUS = (
-        ('Full Stack', 'Full Stack'),
-        ('Backend Development', 'Backend Development'),
-        ('UX-UI Development', 'UX-UI Development'),
-        ('Frontend Development', 'Frontend Development'),
+    GENRE = (
+        ('action movie', 'action movie'),
+        ('romance', 'romance'),
+        ('Fantastic', 'Fantastic'),
+        ('Mystic', 'Mystic'),
     )
-    name = models. CharField(max_length=100)
-    email = models.EmailField(default='@gmail.com')
-    image = models.ImageField(upload_to='images/')
-    about_emp = models.TextField()
-    programming_status = models.CharField(max_length=100, choices=PROGRAMMING_STATUS, null=True)
-    rezume = models.FileField(upload_to='rezume/')
-    date_of_birth = models.DateField()
-    github = models.URLField(max_length=200)
-    created_at = models.DateTimeField(auto_now_add=True)
+    name = models. CharField(max_length=100, verbose_name="Название книги",null=True)
+    email = models.EmailField(default='@gmail.com', verbose_name="Ваша почта",null=True)
+    image = models.ImageField(upload_to='images/', verbose_name='Загрузите фото', null=True)
+    about_emp = models.TextField(verbose_name="о этом книге",null=True)
+    programming_status = models.CharField(max_length=100, choices=GENRE,verbose_name="Жанр книги" ,null=True)
+    rezume = models.FileField(upload_to='rezume/', verbose_name='Загрузите резюме(необизательно)', blank=True, null=True)
+    date_of_birth = models.DateField(verbose_name="Дата создание", null=True)
+    github = models.URLField(max_length=200, verbose_name="Ссылка на книгу", null=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата опубликования", null=True)
 
     def __str__(self):
         return f'{self.name}-{self.programming_status}'

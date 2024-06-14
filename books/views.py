@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from . import models
+from . import models, forms
 import random
 import datetime
 
@@ -50,6 +50,47 @@ def book_detail_views(request, id):
             template_name='employees/book_detail.html',
             context={
                 'emp_id': emp_id,
+            }
+        )
+
+
+def create_book_view(request):
+    if request.method == 'POST':
+        form = forms.BookForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h3>Book added successfully</h3>'
+                                '<a href=/employees/>список книг</a>')
+    else:
+        form = forms.BookForm()
+
+    return render(
+        request,
+        template_name='employees/create_book.html',
+        context={'form': form}
+       )
+
+def drop_book_view(request, id):
+    emp_id = get_object_or_404(models.Employees, id=id)
+    emp_id.delete()
+    return HttpResponse('<h3>Book deleted successfully</h3>'
+                        '<a href=/employees/>список книг</a>')
+
+def edit_book_view(request, id):
+    emp_id = get_object_or_404(models.Employees, id=id)
+    if request.method == 'POST':
+        form = forms.BookForm(request.POST, instance=emp_id)
+        form.save()
+        return HttpResponse('<h3>Book edited successfully</h3>'
+                            '<a href=/employees/>список книг</a>')
+    else:
+        form = forms.BookForm(instance=emp_id)
+        return render(
+            request,
+            template_name='employees/edit_book.html',
+            context={
+                'form': form,
+                'emp_id': emp_id
             }
         )
 

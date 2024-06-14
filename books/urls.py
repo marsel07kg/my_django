@@ -13,6 +13,9 @@ urlpatterns = [
 
     path('employees/',views.book_list_views),
     path('employees/<int:id>/', views.book_detail_views),
+    path('employees/<int:id>/delete/', views.drop_book_view),
+    path('employees/<int:id>/update/', views.edit_book_view),
+    path('create_book/', views.create_book_view),
 
 
     path('hello/',views.name_age),
